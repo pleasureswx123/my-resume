@@ -152,7 +152,7 @@
                     <!-- 个人信息 -->
                     <div class="flex-1">
                         <h1 class="text-3xl md:text-4xl font-bold mb-1">商文学 <span class="ml-2 text-xl md:text-2xl text-blue-100">邯郸人</span></h1>
-                        <h2 class="text-lg md:text-xl font-medium text-blue-100 mb-3">AI全栈开发、偏前端开发工程师、二十年经验</h2>
+                        <h2 class="text-lg md:text-xl font-medium text-blue-100 mb-3">AI全栈开发、偏前端开发工程师、十年以上经验</h2>
                         
                         <!-- 联系信息 -->
                         <div class="flex flex-wrap gap-4 text-sm md:text-base">
@@ -448,6 +448,76 @@
                     
                     <!-- 时间轴设计 -->
                     <div class="relative border-l-2 border-primary-200 dark:border-primary-700 pl-6 ml-3 mt-8">
+                        <!-- Evercall -->
+                        <div class="mb-10 experience-card">
+                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                                <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">Evercall · 前端开发</h3>
+                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                        <i class="far fa-calendar-alt mr-1"></i>2025/03 - 至今
+                                    </div>
+                                </div>
+                                
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
+                                    <li>
+                                        <span class="font-semibold">公司官网开发：</span> 
+                                        独立完成公司官网的设计与开发，网址：
+                                        <a href="https://www.xinliuyuansu.com/" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">https://www.xinliuyuansu.com/</a>
+                                    </li>
+                                    <li>
+                                        <span class="font-semibold">AI情感陪伴数字人智能对话系统：</span> 
+                                        基于 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">React</span>
+                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Vite</span>
+                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Tailwind CSS</span>
+                                        的现代化前端项目。实现了完整的智能对话流程：
+                                        <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                                            <li>用户可通过文字或语音（ASR识别转文字）输入</li>
+                                            <li>WebSocket实时通信，将消息发送到FastAPI后端</li>
+                                            <li>记忆引擎集成：从MongoDB获取用户档案、从Redis获取短期对话历史、通过Faiss向量检索相关长期记忆</li>
+                                            <li>Prompt组装：用户档案+对话上下文+相关记忆组装成完整Prompt</li>
+                                            <li>调用豆包大模型流式生成回复文本</li>
+                                            <li>同步调用TTS引擎将文本转换为情感化语音</li>
+                                            <li>WebSocket实时推送文本片段和音频片段到前端</li>
+                                            <li>前端实现逐字显示AI回复、播放语音、驱动Live2D数字人动画</li>
+                                            <li>对话结束后提取重要信息并保存到长期记忆（向量化后存入Faiss+MongoDB），更新短期记忆（Redis）和用户档案活跃时间，形成完整的对话-记忆-学习闭环</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">公司官网</h4>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">
+                                            独立完成官网设计与开发，展示公司品牌形象和产品服务
+                                        </p>
+                                    </div>
+                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">AI情感陪伴数字人系统</h4>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400">
+                                            智能对话、记忆引擎、Live2D数字人、语音交互等完整功能
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vite</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Tailwind CSS</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">FastAPI</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">MongoDB</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Redis</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Faiss</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">豆包大模型</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">TTS</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">ASR</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Live2D</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">流式生成</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- 生煎包店铺 -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
@@ -815,7 +885,7 @@
             
             <!-- 页脚 -->
             <div class="bg-gray-50 dark:bg-gray-800/80 p-4 rounded-b-xl text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700">
-                <p>© 2025 商文学 - AI全栈开发、偏前端开发工程师、二十年经验</p>
+                <p>© 2025 商文学 - AI全栈开发、偏前端开发工程师、十年以上经验</p>
                 <!-- <p class="mt-1">
                     <i class="fas fa-code text-primary-500 mr-1"></i>
                     本简历使用 HTML, CSS (Tailwind CSS) 和 JavaScript 制作
