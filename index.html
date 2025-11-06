@@ -211,7 +211,7 @@
             <!-- 头部区域 -->
             <div class="relative bg-gradient-to-br from-primary-600 via-blue-600 to-primary-700 p-8 md:p-10 text-white overflow-hidden">
                 <!-- 背景装饰 -->
-                <div class="absolute inset-0 opacity-5">
+                <div class="absolute inset-0 opacity-5 pdf-hide">
                     <div class="absolute top-0 right-0 w-64 h-64 -mt-32 -mr-32 bg-white rounded-full"></div>
                     <div class="absolute bottom-0 left-0 w-48 h-48 -mb-24 -ml-24 bg-white rounded-full"></div>
                 </div>
@@ -1077,6 +1077,13 @@
                 el.style.display = 'none';
             });
 
+            // 隐藏PDF中不需要的装饰层（避免遮罩效果）
+            const pdfHideElements = document.querySelectorAll('.pdf-hide');
+            pdfHideElements.forEach(el => {
+                el.dataset.originalDisplay = el.style.display;
+                el.style.display = 'none';
+            });
+
             // 等待DOM更新
             setTimeout(() => {
                 // 获取主内容容器
@@ -1121,6 +1128,12 @@
                 function restoreElements() {
                     // 恢复元素显示
                     elementsToHide.forEach(el => {
+                        el.style.display = el.dataset.originalDisplay || '';
+                    });
+
+                    // 恢复PDF中隐藏的装饰层
+                    const pdfHideElements = document.querySelectorAll('.pdf-hide');
+                    pdfHideElements.forEach(el => {
                         el.style.display = el.dataset.originalDisplay || '';
                     });
 
