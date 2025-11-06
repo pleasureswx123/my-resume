@@ -36,11 +36,17 @@
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: 0 },
                             '100%': { opacity: 1 },
+                        },
+                        slideUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
                         },
                     },
                 }
@@ -66,18 +72,75 @@
         
         /* 进度条样式 */
         .progress-bar {
-            height: 6px;
+            height: 8px;
             border-radius: 999px;
             overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar > div {
+            transition: width 1s ease-out;
+            border-radius: 999px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar > div::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         /* 卡片悬停效果 */
         .experience-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .experience-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .experience-card:hover {
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* 按钮交互效果 */
+        button {
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 标签动画 */
+        .skill-tag {
+            transition: all 0.2s ease;
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
         }
         
         /* 打印样式 */
@@ -128,66 +191,80 @@
     <!-- 主容器 -->
     <div class="container mx-auto p-4 md:p-8 max-w-5xl animate-fade-in">
         <!-- 深色模式切换 -->
-        <div class="flex justify-end mb-4 no-print">
-            <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none">
-                <i class="fas fa-sun text-yellow-500 dark:hidden"></i>
-                <i class="fas fa-moon text-blue-300 hidden dark:block"></i>
+        <div class="flex justify-end mb-6 no-print gap-2">
+            <button id="theme-toggle" 
+                    class="p-3 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 focus:outline-none transition-all duration-200"
+                    title="切换主题">
+                <i class="fas fa-sun text-yellow-500 dark:hidden text-lg"></i>
+                <i class="fas fa-moon text-blue-400 hidden dark:block text-lg"></i>
             </button>
             <!-- 下载简历pdf按钮 -->
-            <button id="pdf-download-btn" class="p-2 ml-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none">
-                <i class="fas fa-download text-blue-500"></i>
+            <button id="pdf-download-btn" 
+                    class="p-3 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 focus:outline-none transition-all duration-200"
+                    title="下载PDF简历">
+                <i class="fas fa-download text-blue-600 dark:text-blue-400 text-lg"></i>
             </button>
         </div>
         
         <!-- 主卡片 -->
-        <div class="container-body bg-white dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden">
+        <div class="container-body bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
             <!-- 头部区域 -->
-            <div class="relative bg-gradient-to-r from-primary-600 to-blue-700 p-6 md:p-8 text-white">
-                <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
-                    <!-- 头像占位符 -->
-                    <div class="w-32 h-32 md:w-44 md:h-44 rounded-full bg-white/20 overflow-hidden shadow-lg">
+            <div class="relative bg-gradient-to-br from-primary-600 via-blue-600 to-primary-700 p-8 md:p-10 text-white overflow-hidden">
+                <!-- 背景装饰 -->
+                <div class="absolute inset-0 opacity-5">
+                    <div class="absolute top-0 right-0 w-64 h-64 -mt-32 -mr-32 bg-white rounded-full"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 -mb-24 -ml-24 bg-white rounded-full"></div>
+                </div>
+                
+                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8">
+                    <!-- 头像 -->
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-white/20 backdrop-blur-sm overflow-hidden shadow-2xl ring-4 ring-white/20 transform hover:scale-105 transition-transform duration-300">
                         <img src="./img/photo.jpg" alt="商文学照片" class="w-full h-full object-cover">
                     </div>
                     
                     <!-- 个人信息 -->
-                    <div class="flex-1">
-                        <h1 class="text-3xl md:text-4xl font-bold mb-1">商文学 <span class="ml-2 text-xl md:text-2xl text-blue-100">邯郸人</span></h1>
-                        <h2 class="text-lg md:text-xl font-medium text-blue-100 mb-3">AI全栈开发、偏前端开发工程师、十年以上经验</h2>
+                    <div class="flex-1 space-y-3">
+                        <div>
+                            <h1 class="text-4xl md:text-5xl font-bold mb-2 tracking-tight">
+                                商文学
+                                <span class="ml-3 text-2xl md:text-3xl text-blue-100 font-normal">邯郸人</span>
+                            </h1>
+                            <h2 class="text-xl md:text-2xl font-medium text-blue-50/90 leading-relaxed">
+                                AI全栈开发、偏前端开发工程师、十年以上经验
+                            </h2>
+                        </div>
                         
                         <!-- 联系信息 -->
-                        <div class="flex flex-wrap gap-4 text-sm md:text-base">
-                            <a href="tel:15614082058" class="flex items-center gap-1 hover:text-blue-200">
-                                <i class="fas fa-phone"></i>
-                                <span>15614082058</span>
+                        <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base pt-2">
+                            <a href="tel:15011515929" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                <i class="fab fa-weixin w-5 text-center"></i>
+                                <span class="group-hover:underline">15011515929</span>
                             </a>
-                            <a href="tel:15011515929" class="flex items-center gap-1 hover:text-blue-200">
-                                <span>15011515929同微信</span>
+                            <a href="tel:15614082058" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                <i class="fas fa-phone w-5 text-center"></i>
+                                <span class="group-hover:underline">15614082058</span>
                             </a>
-                            <a href="mailto:pleasureswx123@163.com" class="flex items-center gap-1 hover:text-blue-200">
-                                <i class="fas fa-envelope"></i>
-                                <span>pleasureswx123@163.com</span>
+                            <a href="mailto:pleasureswx123@163.com" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                <i class="fas fa-envelope w-5 text-center"></i>
+                                <span class="group-hover:underline">pleasureswx123@163.com</span>
                             </a>
-                            <a href="https://github.com/pleasureswx123" target="_blank" class="flex items-center gap-1 hover:text-blue-200">
-                                <i class="fab fa-github"></i>
-                                <span>GitHub：https://github.com/pleasureswx123</span>
+                            <a href="https://github.com/pleasureswx123" target="_blank" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                <i class="fab fa-github w-5 text-center"></i>
+                                <span class="group-hover:underline">GitHub</span>
                             </a>
                         </div>
                     </div>
                 </div>
-                
-                <!-- 装饰元素 -->
-                <div class="absolute bottom-0 right-0 w-32 h-32 opacity-10">
-                    <i class="fas fa-code text-8xl"></i>
-                </div>
             </div>
             
             <!-- 内容区域 -->
-            <div class="p-6 md:p-8">
+            <div class="p-8 md:p-10">
                 <!-- 自我评价 -->
-                <section class="mb-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-user-circle text-primary-500 text-xl"></i>
-                        <h2 class="text-2xl font-bold border-b border-primary-200 dark:border-primary-700 pb-2 flex-1">自我评价</h2>
+                <section class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                        <i class="fas fa-user-circle text-primary-500 text-2xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">自我评价</h2>
                     </div>
                     <ul class="space-y-3">
                         <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
@@ -233,36 +310,34 @@
                                 ，前端
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">vue2/3</span>
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">react</span>
-                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">nuxtjs</span>
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">uni-app</span>
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">jquery</span>
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">bootstrap</span>
-                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">threejs</span>
-                                <span class="inline-block px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded mr-1 text-xs">d3js</span>
+                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">threejs/babylonjs</span>
+                                <span class="inline-block px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded mr-1 text-xs">pxixjs</span>
                                 <span class="inline-block px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded mr-1 text-xs">echartsjs</span>
                                 <span class="inline-block px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded mr-1 text-xs">electron</span>
                                 <span class="inline-block px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded mr-1 text-xs">canvas</span>
-                                <span class="inline-block px-2 py-0.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 rounded mr-1 text-xs">konvajs</span>
                                 <span class="inline-block px-2 py-0.5 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-200 rounded mr-1 text-xs">webRTC</span>
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">tailwincss</span>
-                                ……
-                                <!-- 硬件 -->
-                                <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                                    <i class="fas fa-microchip text-primary-400 mt-1"></i>
-                                    <span>熟悉硬件：对硬件设备
-                                        <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">STM32</span>
-                                        <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">ESP32</span>
-                                        的物联网
-                                        <span class="inline-block px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded mr-1 text-xs">python</span>
-                                        功能开发，传输/应用层协议
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">TCP</span>
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">MQTT</span>
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">WS</span>
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">HTTP</span>
-                                        服务器开发，AI大模型aiot功能架构流程开发。
-                                    </span>
-                                </li>
-                            </ul>
+                                ……。
+                            </span>
+                        </li>
+                        <!-- 硬件 -->
+                        <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                            <i class="fas fa-microchip text-primary-400 mt-1"></i>
+                            <span>熟悉硬件：对硬件设备
+                                <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">STM32</span>
+                                <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">ESP32</span>
+                                的物联网
+                                <span class="inline-block px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded mr-1 text-xs">python</span>
+                                功能开发，传输/应用层协议
+                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">TCP</span>
+                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">MQTT</span>
+                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">WS</span>
+                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">HTTP</span>
+                                服务器开发，AI大模型aiot功能架构流程开发。
+                            </span>
                         </li>
                         <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
                             <i class="fas fa-rocket text-primary-400 mt-1"></i>
@@ -277,16 +352,17 @@
                 </section>
 
                 <!-- 技能部分 -->
-                <section class="mb-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-code text-primary-500 text-xl"></i>
-                        <h2 class="text-2xl font-bold border-b border-primary-200 dark:border-primary-700 pb-2 flex-1">专业技能</h2>
+                <section class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                        <i class="fas fa-code text-primary-500 text-2xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">专业技能</h2>
                     </div>
                     
                     <!-- 技能网格 -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- 前端技术 -->
-                        <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
+                        <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
                             <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
                                 <i class="fas fa-laptop-code mr-2"></i>前端/后端技术
                             </h3>
@@ -325,10 +401,10 @@
                                 <div>
                                     <div class="flex justify-between mb-1">
                                         <span class="font-medium">React</span>
-                                        <span>85%</span>
+                                        <span>92%</span>
                                     </div>
                                     <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 85%"></div>
+                                        <div class="bg-primary-500 h-full" style="width: 92%"></div>
                                     </div>
                                 </div>
                                 
@@ -345,7 +421,7 @@
                         </div>
                         
                         <!-- 通用技术 -->
-                        <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
+                        <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
                             <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
                                 <i class="fas fa-tools mr-2"></i>工具与通用技术
                             </h3>
@@ -405,7 +481,7 @@
                     </div>
                     
                     <!-- 技能描述 -->
-                    <div class="mt-6 bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
+                    <div class="mt-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                         <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
                             <i class="fas fa-list-check mr-2"></i>技能详情
                         </h3>
@@ -417,11 +493,7 @@
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>熟练使用tailwindcss、vue2/vuex、vue3/pinia、React/redux、ElementUi plus、Vant、uviewUi、AntD、Nodejs、express、koa、typescript。</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>对NuxtJS有深入研究，能够运用其进行高效的服务端渲染和静态站点生成，优化项目性能和用户体验。</span>
+                                <span>熟练使用tailwindcss、vue/vuex、vue3/pinia、React/redux、ElementUi plus、Vant、uviewUi、AntD、Nodejs、express、koa、typescript。</span>
                             </li>
                             <li class="flex items-start">
                                 <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
@@ -440,10 +512,11 @@
                 </section>
 
                 <!-- 工作经历 -->
-                <section class="mb-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-briefcase text-primary-500 text-xl"></i>
-                        <h2 class="text-2xl font-bold border-b border-primary-200 dark:border-primary-700 pb-2 flex-1">工作经历</h2>
+                <section class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                        <i class="fas fa-briefcase text-primary-500 text-2xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">工作经历</h2>
                     </div>
                     
                     <!-- 时间轴设计 -->
@@ -451,7 +524,7 @@
                         <!-- Evercall -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                 <div class="flex flex-col sm:flex-row justify-between mb-2">
                                     <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">Evercall · 前端开发</h3>
                                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -505,6 +578,7 @@
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vite</span>
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Tailwind CSS</span>
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
+                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Nextjs</span>
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">FastAPI</span>
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">MongoDB</span>
                                     <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Redis</span>
@@ -521,7 +595,7 @@
                         <!-- 生煎包店铺 -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                 <div class="flex flex-col sm:flex-row justify-between mb-2">
                                     <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">生煎包店铺 · 生煎包</h3>
                                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -538,7 +612,7 @@
                         <!-- 自由职业 -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                 <div class="flex flex-col sm:flex-row justify-between mb-2">
                                     <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">自由职业者 · 前端开发</h3>
                                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -618,7 +692,7 @@
                         <!-- 北京有大科技 -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                 <div class="flex flex-col sm:flex-row justify-between mb-2">
                                     <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">北京有大科技有限公司 · 前端开发</h3>
                                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -672,7 +746,7 @@
                         <!-- 58到家 快狗打车 -->
                         <div class="mb-10 experience-card">
                             <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                 <div class="flex flex-col sm:flex-row justify-between mb-2">
                                     <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">58到家 - 快狗打车 · 前端开发</h3>
                                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -707,9 +781,10 @@
                         </div>
                         
                         <!-- 查看更多按钮 -->
-                        <div class="text-center mt-4">
-                            <button id="show-more" class="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors">
-                                查看更多经历 <i class="fas fa-chevron-down ml-1"></i>
+                        <div class="text-center mt-8">
+                            <button id="show-more" 
+                                    class="px-6 py-3 bg-gradient-to-r from-primary-500 to-blue-600 text-white rounded-xl hover:from-primary-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-xl transform hover:scale-105 font-medium">
+                                查看更多经历 <i class="fas fa-chevron-down ml-2"></i>
                             </button>
                         </div>
                         
@@ -718,7 +793,7 @@
                             <!-- VIPKID -->
                             <div class="mb-10 experience-card">
                                 <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                     <div class="flex flex-col sm:flex-row justify-between mb-2">
                                         <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">VIPKID · 前端研发高级工程师</h3>
                                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -792,7 +867,7 @@
                             <!-- 今目标 -->
                             <div class="mb-10 experience-card">
                                 <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                     <div class="flex flex-col sm:flex-row justify-between mb-2">
                                         <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">今目标 · 资深前端工程师</h3>
                                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -820,7 +895,7 @@
                             <!-- 奇虎360 -->
                             <div class="mb-10 experience-card">
                                 <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700">
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                     <div class="flex flex-col sm:flex-row justify-between mb-2">
                                         <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">奇虎360 · 前端开发工程师</h3>
                                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
@@ -863,20 +938,21 @@
                 </section>
 
                 <!-- 教育经历 -->
-                <section>
-                    <div class="flex items-center gap-2 mb-4">
-                        <i class="fas fa-graduation-cap text-primary-500 text-xl"></i>
-                        <h2 class="text-2xl font-bold border-b border-primary-200 dark:border-primary-700 pb-2 flex-1">教育经历</h2>
+                <section class="mb-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                        <i class="fas fa-graduation-cap text-primary-500 text-2xl"></i>
+                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">教育经历</h2>
                     </div>
                     
-                    <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
                         <div class="flex flex-col sm:flex-row justify-between items-start">
                             <div>
-                                <h3 class="text-lg font-semibold">河北临漳二中</h3>
+                                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">河北临漳二中</h3>
                                 <p class="text-gray-600 dark:text-gray-400">高中学历</p>
                             </div>
-                            <div class="inline-flex items-center px-3 py-1 mt-2 sm:mt-0 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                <i class="far fa-calendar-alt mr-1"></i>1999/09 - 2002/07
+                            <div class="inline-flex items-center px-4 py-2 mt-3 sm:mt-0 rounded-full text-sm font-medium bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300 shadow-sm">
+                                <i class="far fa-calendar-alt mr-2"></i>1999/09 - 2002/07
                             </div>
                         </div>
                     </div>
@@ -884,18 +960,18 @@
             </div>
             
             <!-- 页脚 -->
-            <div class="bg-gray-50 dark:bg-gray-800/80 p-4 rounded-b-xl text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700">
-                <p>© 2025 商文学 - AI全栈开发、偏前端开发工程师、十年以上经验</p>
-                <!-- <p class="mt-1">
-                    <i class="fas fa-code text-primary-500 mr-1"></i>
-                    本简历使用 HTML, CSS (Tailwind CSS) 和 JavaScript 制作
-                </p> -->
+            <div class="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 dark:from-gray-800 dark:via-gray-800/90 dark:to-gray-800 p-6 rounded-b-xl text-center border-t border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    © 2025 <span class="text-primary-600 dark:text-primary-400 font-semibold">商文学</span> - AI全栈开发、偏前端开发工程师、十年以上经验
+                </p>
             </div>
         </div>
         
         <!-- 回到顶部按钮 -->
-        <div id="back-to-top" class="fixed bottom-4 right-4 bg-primary-500 text-white p-2 rounded-full shadow-lg cursor-pointer opacity-0 transition-opacity hidden">
-            <i class="fas fa-arrow-up"></i>
+        <div id="back-to-top" 
+             class="fixed bottom-6 right-6 bg-gradient-to-br from-primary-500 to-blue-600 text-white p-3 rounded-full shadow-xl hover:shadow-2xl cursor-pointer opacity-0 transition-all duration-300 hidden z-50 group hover:scale-110">
+            <i class="fas fa-arrow-up text-lg"></i>
+            <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">回到顶部</span>
         </div>
     </div>
     
@@ -961,9 +1037,16 @@
         pdfDownloadBtn.addEventListener('click', generatePDF);
         
         function generatePDF() {
+            // 检查html2pdf库是否加载
+            if (typeof html2pdf === 'undefined') {
+                alert('PDF生成库加载失败，请刷新页面重试');
+                return;
+            }
+
             // 显示加载状态
             pdfDownloadBtn.disabled = true;
-            pdfDownloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin text-blue-500"></i>';
+            const originalContent = pdfDownloadBtn.innerHTML;
+            pdfDownloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin text-blue-600 dark:text-blue-400 text-lg"></i>';
 
             // 保存当前主题状态
             const isDarkMode = html.classList.contains('dark');
@@ -977,12 +1060,12 @@
             const moreExperience = document.getElementById('more-experience');
             const showMoreBtn = document.getElementById('show-more');
             const wasMoreExperienceHidden = moreExperience.classList.contains('hidden');
-            const wasShowMoreBtnHidden = showMoreBtn.style.display === 'none' || showMoreBtn.classList.contains('hidden');
 
-            // 展开更多经历
+            // 展开更多经历以确保PDF包含完整内容
             if (wasMoreExperienceHidden) {
                 moreExperience.classList.remove('hidden');
             }
+            
             // 隐藏查看更多按钮
             showMoreBtn.dataset.originalDisplay = showMoreBtn.style.display;
             showMoreBtn.style.display = 'none';
@@ -994,21 +1077,48 @@
                 el.style.display = 'none';
             });
 
-            // 获取主内容容器
-            const element = document.querySelector('.container-body');
+            // 等待DOM更新
+            setTimeout(() => {
+                // 获取主内容容器
+                const element = document.querySelector('.container-body');
 
-            // html2pdf选项
-            const opt = {
-                margin: [10, 10, 10, 10],
-                filename: 'shangwenxue_resume.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, logging: false },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+                if (!element) {
+                    console.error('找不到简历内容容器');
+                    restoreElements();
+                    return;
+                }
 
-            // 生成PDF
-            html2pdf().from(element).set(opt).save()
-                .then(() => {
+                // html2pdf选项
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: '商文学_简历.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { 
+                        scale: 2, 
+                        useCORS: true, 
+                        logging: false,
+                        backgroundColor: '#ffffff'
+                    },
+                    jsPDF: { 
+                        unit: 'mm', 
+                        format: 'a4', 
+                        orientation: 'portrait',
+                        compress: true
+                    }
+                };
+
+                // 生成PDF
+                html2pdf().set(opt).from(element).save()
+                    .then(() => {
+                        restoreElements();
+                    })
+                    .catch((error) => {
+                        console.error('PDF生成失败:', error);
+                        alert('PDF生成失败，请稍后重试');
+                        restoreElements();
+                    });
+
+                function restoreElements() {
                     // 恢复元素显示
                     elementsToHide.forEach(el => {
                         el.style.display = el.dataset.originalDisplay || '';
@@ -1027,9 +1137,22 @@
 
                     // 恢复按钮状态
                     pdfDownloadBtn.disabled = false;
-                    pdfDownloadBtn.innerHTML = '<i class="fas fa-download text-blue-500"></i>';
-                });
+                    pdfDownloadBtn.innerHTML = originalContent;
+                }
+            }, 300);
         }
+        
+        // 页面加载完成后触发进度条动画
+        window.addEventListener('load', () => {
+            const progressBars = document.querySelectorAll('.progress-bar > div');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
     </script>
 </body>
 </html>
