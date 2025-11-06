@@ -9,7 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- PDF生成库 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>商文学 - 全栈开发简历</title>
     <script>
         tailwind.config = {
@@ -60,16 +63,16 @@
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
             line-height: 1.3;
         }
-        
+
         a {
             transition: color 0.3s ease, border-color 0.3s ease;
         }
-        
+
         /* 进度条样式 */
         .progress-bar {
             height: 8px;
@@ -77,14 +80,14 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .progress-bar > div {
             transition: width 1s ease-out;
             border-radius: 999px;
             position: relative;
             overflow: hidden;
         }
-        
+
         .progress-bar > div::after {
             content: '';
             position: absolute;
@@ -95,93 +98,93 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 2s infinite;
         }
-        
+
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        
+
         /* 卡片悬停效果 */
         .experience-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .experience-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
         }
-        
+
         .dark .experience-card:hover {
             box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
         }
-        
+
         /* 按钮交互效果 */
         button {
             transition: all 0.2s ease;
         }
-        
+
         button:hover {
             transform: scale(1.05);
         }
-        
+
         button:active {
             transform: scale(0.98);
         }
-        
+
         /* 标签动画 */
         .skill-tag {
             transition: all 0.2s ease;
         }
-        
+
         .skill-tag:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* 平滑滚动 */
         html {
             scroll-behavior: smooth;
         }
-        
+
         /* 打印样式 */
         @media print {
             .no-print {
                 display: none !important;
             }
-            
+
             body {
                 background-color: white !important;
                 color: black !important;
             }
-            
+
             .container {
                 max-width: 100% !important;
                 padding: 0 !important;
             }
-            
+
             .shadow-lg, .shadow-md, .shadow-sm {
                 box-shadow: none !important;
             }
         }
-        
+
         /* 深色模式 */
         .dark body {
             background-color: #111827;
             color: #f3f4f6;
         }
-        
+
         .dark .bg-white {
             background-color: #1f2937;
         }
-        
+
         .dark .text-gray-800 {
             color: #f3f4f6;
         }
-        
+
         .dark .text-gray-600 {
             color: #d1d5db;
         }
-        
+
         .dark .border-gray-200 {
             border-color: #374151;
         }
@@ -192,84 +195,85 @@
     <div class="container mx-auto p-4 md:p-8 max-w-5xl animate-fade-in">
         <!-- 深色模式切换 -->
         <div class="flex justify-end mb-6 no-print gap-2">
-            <button id="theme-toggle" 
+            <button id="theme-toggle"
                     class="p-3 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 focus:outline-none transition-all duration-200"
                     title="切换主题">
                 <i class="fas fa-sun text-yellow-500 dark:hidden text-lg"></i>
                 <i class="fas fa-moon text-blue-400 hidden dark:block text-lg"></i>
             </button>
             <!-- 下载简历pdf按钮 -->
-            <button id="pdf-download-btn" 
+            <button id="pdf-download-btn"
                     class="p-3 rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 focus:outline-none transition-all duration-200"
                     title="下载PDF简历">
                 <i class="fas fa-download text-blue-600 dark:text-blue-400 text-lg"></i>
             </button>
         </div>
-        
+
         <!-- 主卡片 -->
-        <div class="container-body bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
-            <!-- 头部区域 -->
-            <div class="relative bg-gradient-to-br from-primary-600 via-blue-600 to-primary-700 p-8 md:p-10 text-white overflow-hidden">
-                <!-- 背景装饰 -->
-                <div class="absolute inset-0 opacity-5 pdf-hide">
-                    <div class="absolute top-0 right-0 w-64 h-64 -mt-32 -mr-32 bg-white rounded-full"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 -mb-24 -ml-24 bg-white rounded-full"></div>
-                </div>
-                
-                <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8">
-                    <!-- 头像 -->
-                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-white/20 backdrop-blur-sm overflow-hidden shadow-2xl ring-4 ring-white/20 transform hover:scale-105 transition-transform duration-300">
-                        <img src="./img/photo.jpg" alt="商文学照片" class="w-full h-full object-cover">
+        <div class="container-body relative z-[100] border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
+            <div class="resume-container overflow-hidden">
+                <!-- 头部区域 -->
+                <div class="relative rounded-2xl bg-gradient-to-br from-primary-600 via-blue-600 to-primary-700 p-8 md:p-10 text-white overflow-hidden">
+                    <!-- 背景装饰 -->
+                    <div class="absolute inset-0 opacity-5 pdf-hide">
+                        <div class="absolute top-0 right-0 w-64 h-64 -mt-32 -mr-32 bg-white rounded-full"></div>
+                        <div class="absolute bottom-0 left-0 w-48 h-48 -mb-24 -ml-24 bg-white rounded-full"></div>
                     </div>
-                    
-                    <!-- 个人信息 -->
-                    <div class="flex-1 space-y-3">
-                        <div>
-                            <h1 class="text-4xl md:text-5xl font-bold mb-2 tracking-tight">
-                                商文学
-                                <span class="ml-3 text-2xl md:text-3xl text-blue-100 font-normal">邯郸人</span>
-                            </h1>
-                            <h2 class="text-xl md:text-2xl font-medium text-blue-50/90 leading-relaxed">
-                                AI全栈开发、偏前端开发工程师、十年以上经验
-                            </h2>
+
+                    <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8">
+                        <!-- 头像 -->
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-white/20 backdrop-blur-sm overflow-hidden shadow-2xl ring-4 ring-white/20 transform hover:scale-105 transition-transform duration-300">
+                            <img src="./img/photo.jpg" alt="商文学照片" class="w-full h-full object-cover">
                         </div>
-                        
-                        <!-- 联系信息 -->
-                        <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base pt-2">
-                            <a href="tel:15011515929" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
-                                <i class="fab fa-weixin w-5 text-center"></i>
-                                <span class="group-hover:underline">15011515929</span>
-                            </a>
-                            <a href="tel:15614082058" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
-                                <i class="fas fa-phone w-5 text-center"></i>
-                                <span class="group-hover:underline">15614082058</span>
-                            </a>
-                            <a href="mailto:pleasureswx123@163.com" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
-                                <i class="fas fa-envelope w-5 text-center"></i>
-                                <span class="group-hover:underline">pleasureswx123@163.com</span>
-                            </a>
-                            <a href="https://github.com/pleasureswx123" target="_blank" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
-                                <i class="fab fa-github w-5 text-center"></i>
-                                <span class="group-hover:underline">GitHub</span>
-                            </a>
+
+                        <!-- 个人信息 -->
+                        <div class="flex-1 space-y-3">
+                            <div>
+                                <h1 class="text-4xl md:text-5xl font-bold mb-2 tracking-tight">
+                                    商文学
+                                    <span class="ml-3 text-2xl md:text-3xl text-blue-100 font-normal">邯郸人</span>
+                                </h1>
+                                <h2 class="text-xl md:text-2xl font-medium text-blue-50/90 leading-relaxed">
+                                    AI全栈开发、偏前端开发工程师、十年以上经验
+                                </h2>
+                            </div>
+
+                            <!-- 联系信息 -->
+                            <div class="flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base pt-2">
+                                <a href="tel:15011515929" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                    <i class="fab fa-weixin w-5 text-center"></i>
+                                    <span class="group-hover:underline">15011515929</span>
+                                </a>
+                                <a href="tel:15614082058" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                    <i class="fas fa-phone w-5 text-center"></i>
+                                    <span class="group-hover:underline">15614082058</span>
+                                </a>
+                                <a href="mailto:pleasureswx123@163.com" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                    <i class="fas fa-envelope w-5 text-center"></i>
+                                    <span class="group-hover:underline">pleasureswx123@163.com</span>
+                                </a>
+                                <a href="https://github.com/pleasureswx123" target="_blank" class="flex items-center gap-2 hover:text-blue-200 transition-colors group">
+                                    <i class="fab fa-github w-5 text-center"></i>
+                                    <span class="group-hover:underline">GitHub</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- 内容区域 -->
-            <div class="p-8 md:p-10">
-                <!-- 自我评价 -->
-                <section class="mb-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
-                        <i class="fas fa-user-circle text-primary-500 text-2xl"></i>
-                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">自我评价</h2>
-                    </div>
-                    <ul class="space-y-3">
-                        <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-brain text-primary-400 mt-1"></i>
-                            <span>对AI有着浓厚的兴趣，密切关注前沿技术动态，积极尝试调用流行AI工具API，并持续关注AI智能体发展。十年平面UI设计与十年前端开发经验，参与过多种项目，包括
+
+                <!-- 内容区域 -->
+                <div class="p-8 md:p-10">
+                    <!-- 自我评价 -->
+                    <section class="mb-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                            <i class="fas fa-user-circle text-primary-500 text-2xl"></i>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">自我评价</h2>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                                <i class="fas fa-brain text-primary-400 mt-1"></i>
+                                <span>对AI有着浓厚的兴趣，密切关注前沿技术动态，积极尝试调用流行AI工具API，并持续关注AI智能体发展。十年平面UI设计与十年前端开发经验，参与过多种项目，包括
                                 <span class="inline-block px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded mr-1 text-xs">PC端H5</span>
                                 <span class="inline-block px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded mr-1 text-xs">移动端H5</span>
                                 <span class="inline-block px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded mr-1 text-xs">后台管理系统</span>
@@ -293,10 +297,10 @@
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">react</span>
                                 ，从0到1完成过很多项目。
                             </span>
-                        </li>
-                        <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-laptop-code text-primary-400 mt-1"></i>
-                            <span>全栈开发，侧重前端开发，会设计
+                            </li>
+                            <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                                <i class="fas fa-laptop-code text-primary-400 mt-1"></i>
+                                <span>全栈开发，侧重前端开发，会设计
                                 <span class="inline-block px-2 py-0.5 bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-200 rounded mr-1 text-xs">sketch</span>
                                 <span class="inline-block px-2 py-0.5 bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-200 rounded mr-1 text-xs">figma</span>
                                 <span class="inline-block px-2 py-0.5 bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-200 rounded mr-1 text-xs">photoshop</span>
@@ -322,11 +326,11 @@
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">tailwincss</span>
                                 ……。
                             </span>
-                        </li>
-                        <!-- 硬件 -->
-                        <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-microchip text-primary-400 mt-1"></i>
-                            <span>熟悉硬件：对硬件设备
+                            </li>
+                            <!-- 硬件 -->
+                            <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                                <i class="fas fa-microchip text-primary-400 mt-1"></i>
+                                <span>熟悉硬件：对硬件设备
                                 <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">STM32</span>
                                 <span class="inline-block px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-200 rounded mr-1 text-xs">ESP32</span>
                                 的物联网
@@ -338,627 +342,628 @@
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">HTTP</span>
                                 服务器开发，AI大模型aiot功能架构流程开发。
                             </span>
-                        </li>
-                        <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
-                            <i class="fas fa-rocket text-primary-400 mt-1"></i>
-                            <span>探索AI应用，做过AIGC项目，创建工作流，搭建智能体，利用
+                            </li>
+                            <li class="flex items-start gap-2 text-gray-700 dark:text-gray-300">
+                                <i class="fas fa-rocket text-primary-400 mt-1"></i>
+                                <span>探索AI应用，做过AIGC项目，创建工作流，搭建智能体，利用
                                 <span class="inline-block px-2 py-0.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 rounded mr-1 text-xs">nodejs</span>
                                 组合调用
                                 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">coze、kimi、flux、volcano_tts</span>
                                 等做过一些事情，对AI有着强烈的兴趣，渴望用AI解决现实生活问题。专注软硬件交互AI商业化落地，共拓技术新场景!
                             </span>
-                        </li>
-                    </ul>
-                </section>
-
-                <!-- 技能部分 -->
-                <section class="mb-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
-                        <i class="fas fa-code text-primary-500 text-2xl"></i>
-                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">专业技能</h2>
-                    </div>
-                    
-                    <!-- 技能网格 -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- 前端技术 -->
-                        <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
-                            <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
-                                <i class="fas fa-laptop-code mr-2"></i>前端/后端技术
-                            </h3>
-                            
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">JavaScript/ES6</span>
-                                        <span>95%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 95%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">HTML5/CSS3</span>
-                                        <span>90%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 90%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">Vue.js (2/3)</span>
-                                        <span>92%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 92%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">React</span>
-                                        <span>92%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 92%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">Mysql</span>
-                                        <span>80%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 通用技术 -->
-                        <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
-                            <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
-                                <i class="fas fa-tools mr-2"></i>工具与通用技术
-                            </h3>
-                            
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">小程序开发</span>
-                                        <span>88%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 88%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">工程化 (Webpack/Vite)</span>
-                                        <span>85%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">Node.js/koa/express</span>
-                                        <span>80%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 80%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">AI集成与应用</span>
-                                        <span>75%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-medium">诺依框架/Java</span>
-                                        <span>75%</span>
-                                    </div>
-                                    <div class="progress-bar bg-gray-200 dark:bg-gray-600">
-                                        <div class="bg-primary-500 h-full" style="width: 75%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 技能描述 -->
-                    <div class="mt-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
-                            <i class="fas fa-list-check mr-2"></i>技能详情
-                        </h3>
-                        
-                        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>从0到1独立完成过很多项目，PC与移动端开发经验：多年PC端和移动端开发经验，涉及app、H5、微信小程序、uni-app小程序、后台管理系统等。</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>熟练使用tailwindcss、vue/vuex、vue3/pinia、React/redux、ElementUi plus、Vant、uviewUi、AntD、Nodejs、express、koa、typescript。</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>熟练掌握混合应用h5 app开发与webview js与原生交互方式(jsbridge、URL Schemes)通讯。</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>面向对象编程，能够设计并架构各类模块之间的相互依赖关系，协调相互的通信机制，并运用设计模式。</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
-                                <span>对目前流行AI工具的API调用有实际尝试，积累了一定经验，有助于将AI技术融入前端开发项目，提升产品功能和用户体验。</span>
                             </li>
                         </ul>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- 工作经历 -->
-                <section class="mb-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
-                        <i class="fas fa-briefcase text-primary-500 text-2xl"></i>
-                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">工作经历</h2>
-                    </div>
-                    
-                    <!-- 时间轴设计 -->
-                    <div class="relative border-l-2 border-primary-200 dark:border-primary-700 pl-6 ml-3 mt-8">
-                        <!-- Evercall -->
-                        <div class="mb-10 experience-card">
-                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">Evercall · 前端开发</h3>
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                        <i class="far fa-calendar-alt mr-1"></i>2025/03 - 至今
+                    <!-- 技能部分 -->
+                    <section class="mb-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                            <i class="fas fa-code text-primary-500 text-2xl"></i>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">专业技能</h2>
+                        </div>
+
+                        <!-- 技能网格 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- 前端技术 -->
+                            <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
+                                <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
+                                    <i class="fas fa-laptop-code mr-2"></i>前端/后端技术
+                                </h3>
+
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">JavaScript/ES6</span>
+                                            <span>95%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">HTML5/CSS3</span>
+                                            <span>90%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">Vue.js (2/3)</span>
+                                            <span>92%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 92%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">React</span>
+                                            <span>92%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 92%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">Mysql</span>
+                                            <span>80%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 80%"></div>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
-                                    <li>
-                                        <span class="font-semibold">公司官网开发：</span> 
-                                        独立完成公司官网的设计与开发，网址：
-                                        <a href="https://www.xinliuyuansu.com/" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">https://www.xinliuyuansu.com/</a>
-                                    </li>
-                                    <li>
-                                        <span class="font-semibold">AI情感陪伴数字人智能对话系统：</span> 
-                                        基于 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">React</span>
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Vite</span>
-                                        <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Tailwind CSS</span>
-                                        的现代化前端项目。实现了完整的智能对话流程：
-                                        <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
-                                            <li>用户可通过文字或语音（ASR识别转文字）输入</li>
-                                            <li>WebSocket实时通信，将消息发送到FastAPI后端</li>
-                                            <li>记忆引擎集成：从MongoDB获取用户档案、从Redis获取短期对话历史、通过Faiss向量检索相关长期记忆</li>
-                                            <li>Prompt组装：用户档案+对话上下文+相关记忆组装成完整Prompt</li>
-                                            <li>调用豆包大模型流式生成回复文本</li>
-                                            <li>同步调用TTS引擎将文本转换为情感化语音</li>
-                                            <li>WebSocket实时推送文本片段和音频片段到前端</li>
-                                            <li>前端实现逐字显示AI回复、播放语音、驱动Live2D数字人动画</li>
-                                            <li>对话结束后提取重要信息并保存到长期记忆（向量化后存入Faiss+MongoDB），更新短期记忆（Redis）和用户档案活跃时间，形成完整的对话-记忆-学习闭环</li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            </div>
 
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">公司官网</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            独立完成官网设计与开发，展示公司品牌形象和产品服务
-                                        </p>
-                                    </div>
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">AI情感陪伴数字人系统</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            智能对话、记忆引擎、Live2D数字人、语音交互等完整功能
-                                        </p>
-                                    </div>
-                                </div>
+                            <!-- 通用技术 -->
+                            <div class="bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow duration-300">
+                                <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
+                                    <i class="fas fa-tools mr-2"></i>工具与通用技术
+                                </h3>
 
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vite</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Tailwind CSS</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Nextjs</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">FastAPI</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">MongoDB</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Redis</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Faiss</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">豆包大模型</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">TTS</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">ASR</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Live2D</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">流式生成</span>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">小程序开发</span>
+                                            <span>88%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 88%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">工程化 (Webpack/Vite)</span>
+                                            <span>85%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">Node.js/koa/express</span>
+                                            <span>80%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">AI集成与应用</span>
+                                            <span>75%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between mb-1">
+                                            <span class="font-medium">诺依框架/Java</span>
+                                            <span>75%</span>
+                                        </div>
+                                        <div class="progress-bar bg-gray-200 dark:bg-gray-600">
+                                            <div class="bg-primary-500 h-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- 生煎包店铺 -->
-                        <div class="mb-10 experience-card">
-                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">生煎包店铺 · 生煎包</h3>
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                        <i class="far fa-calendar-alt mr-1"></i>2024/05 - 2025/02
-                                    </div>
-                                </div>
-                                <p class="mb-3 text-sm text-gray-700 dark:text-gray-300">
-                                    在燕郊便民市场开了一个生煎包店铺，因经营不善关门了。  <span class="underline text-blue-500">#小程序://食尚朋友/1jYc1QuUEEzOWmr</span>
-                                </p>
-                            </div>
+
+                        <!-- 技能描述 -->
+                        <div class="mt-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                            <h3 class="text-lg font-semibold mb-3 text-primary-600 dark:text-primary-400">
+                                <i class="fas fa-list-check mr-2"></i>技能详情
+                            </h3>
+
+                            <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>从0到1独立完成过很多项目，PC与移动端开发经验：多年PC端和移动端开发经验，涉及app、H5、微信小程序、uni-app小程序、后台管理系统等。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>熟练使用tailwindcss、vue/vuex、vue3/pinia、React/redux、ElementUi plus、Vant、uviewUi、AntD、Nodejs、express、koa、typescript。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>熟练掌握混合应用h5 app开发与webview js与原生交互方式(jsbridge、URL Schemes)通讯。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>面向对象编程，能够设计并架构各类模块之间的相互依赖关系，协调相互的通信机制，并运用设计模式。</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                    <span>对目前流行AI工具的API调用有实际尝试，积累了一定经验，有助于将AI技术融入前端开发项目，提升产品功能和用户体验。</span>
+                                </li>
+                            </ul>
                         </div>
-                        
-                        
-                        <!-- 自由职业 -->
-                        <div class="mb-10 experience-card">
-                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">自由职业者 · 前端开发</h3>
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                        <i class="far fa-calendar-alt mr-1"></i>2022/08 - 2024/04
-                                    </div>
-                                </div>
-                                
-                                <p class="mb-3 text-sm text-gray-700 dark:text-gray-300">
-                                    在这一段自由职业期间，我积极参与了多个项目，积累了丰富的实践经验。独立完成了多个前端开发项目，包括但不限于超级语言AI、三元及递小程序、投递App等。
-                                </p>
-                                
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">AIGC超级语言</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            独立完成整个项目的前端工作，实现了文生图片、图片处理、图生成视频、生成配音等功能。
-                                        </p>
-                                    </div>
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">光电圈公司的官网与后台管理系统开发</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            行业招聘、新闻资讯、行业活动、光电专家、光电期刊、光电企业、光电产品、光电方案、信息中心、权限管理等。
-                                        </p>
-                                    </div>
+                    </section>
 
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">软益公司</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            动态分阶段分步骤创建项目，有列表、看板、甘特图、日历等。供应商对比/评审分类列表，知识文档等
-                                        </p>
-                                    </div>
-
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">妙喵相机小程序</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            变脸，美化帅点，从本地相册选择20张照片，然后进行合成，产出一张美化后的照片，可以选择模板，生成例如古风、现代等风格的照片，可分享到朋友圈等功能。
-                                        </p>
-                                    </div>
-
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">美众程序</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            利用小程序变发型、试戴记录/详情、门店预约、在线预约、腾讯地图、选择发型师、到店时间、填写预约人信息、发型师列表等功能。
-                                        </p>
-                                    </div>
-
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">三元及递小程序、投递App(投递员用的)、物流App(站长用的)、三元乳业后台管理系统</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            卖奶、投递员投递奶、站长管理奶等，有购物车，结算支付，保健抵扣、奶卡充值、订单管理、配送管理(天天送、工作送、隔日送、周末送、增加特定的排除日期等)、退奶流程、客户管理、购买流程、小区排序等功能。
-                                        </p>
-                                    </div>
-
-
-                                </div>
-                                
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue2/3</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vite</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">h5</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uview</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">element-plus</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">nuxtJs</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">AIGC</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">electron</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">konvaJS</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">threeJs</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">rouyi</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">java</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">mysql</span>
-                                </div>
-                            </div>
+                    <!-- 工作经历 -->
+                    <section class="mb-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                            <i class="fas fa-briefcase text-primary-500 text-2xl"></i>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">工作经历</h2>
                         </div>
-                        
-                        <!-- 北京有大科技 -->
-                        <div class="mb-10 experience-card">
-                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">北京有大科技有限公司 · 前端开发</h3>
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                        <i class="far fa-calendar-alt mr-1"></i>2022/01 - 2022/07
-                                    </div>
-                                </div>
-                                
-                                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
-                                    <li>主要负责线上云会议平台及参会主办方的活动后台管理系统的创建。此外，还包括埋点系统SDK类库开发、性能优化以及生成邮箱低代码邮件系统的开发。
-                                    </li>
-                                    <li><span class="font-semibold">线上云会议平台开发：</span> 会议预约和报名功能设计，直播及聊天室等功能实现，确保稳定和流畅，会议记录和回放功能开发。</li>
-                                    <li><span class="font-semibold">活动后台管理系统：</span> 活动信息管理模块开发，参会人员管理功能设计，活动数据分析与可视化。</li>
-                                    <li><span class="font-semibold">埋点系统：</span> 设计并实现了一套完整的用户行为追踪系统，收集并分析用户数据，为产品优化提供依据。</li>
-                                    <li><span class="font-semibold">性能优化：</span> 对前端页面进行性能优化，减少加载时间和资源消耗。对后端API进行调优，提高响应速度和并发处理能力。</li>
-                                    <li><span class="font-semibold">生成邮箱低代码邮件系统：</span> 参与低代码邮件系统的开发，提高了邮件生成效率和灵活性。</li>
-                                </ul>
 
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">线上云会议平台</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            开发会议预约、报名、直播及聊天室等功能
-                                        </p>
-                                    </div>
-                                    <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
-                                        <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">埋点系统</h4>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400">
-                                            设计并实现用户行为追踪系统，为产品优化提供依据
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">element-plus</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Ant Design</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">echarts</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">threeJs</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue3</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">react</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">网易IM</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">信令、流媒体</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Pinia</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vite</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebRTC</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 58到家 快狗打车 -->
-                        <div class="mb-10 experience-card">
-                            <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                            <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                    <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">58到家 - 快狗打车 · 前端开发</h3>
-                                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                        <i class="far fa-calendar-alt mr-1"></i>2021/01 - 2022/01
-                                    </div>
-                                </div>
-                                
-                                <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
-                                    <li><span class="font-semibold">主要负责业务：</span><br>
-                                        <span class="block ml-4">合伙人业务：包括快狗通后台、合伙人小程序(微信)、支付宝游骑兵H5。</span>
-                                        <span class="block ml-4">搬家业务：用户端与司机端App H5、uniapp(微信与支付宝小程序)、快狗通后台(搬家相关业务)。</span>
-                                        <span class="block ml-4">车服业务：分润、车商城、咔咔找车(微信小程序)、快狗通后台(车服相关业务)。</span>
-                                    </li>
-                                    <li><span class="font-semibold">主要工作内容：</span></li>
-                                    <li class="ml-4">业务文件拆分与组件化：主导业务文件的拆分工作，使每个组件职责单一，只做一件事情，大大提高了代码的可读性和可维护性。</li>
-                                    <li class="ml-4">重构：针对app的H5搬家业务，重构了mock数据工作流。通过router增加children、vuex增加module/namespaced等方式，优化了数据传递和模拟数据流，使得开发过程中数据的处理更为高效和准确。</li>
-                                    <li class="ml-4">响应式布局优化：参与响应式布局的调整，确保页面在不同设备上都能良好地展示。</li>
-                                    <li class="ml-4">webpack部署与H5多页面数据传输：负责webpack的部署工作，确保项目能够顺利上线运行，并处理了app webview H5间的数据传输问题，提高了页面的交互效率。</li>
-                                </ul>
-
-                                <div class="flex flex-wrap gap-1">
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">App</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">H5</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm模块</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">微信小程序</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue.js</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
-                                    <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Webpack</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 查看更多按钮 -->
-                        <div class="text-center mt-8">
-                            <button id="show-more" 
-                                    class="px-6 py-3 bg-gradient-to-r from-primary-500 to-blue-600 text-white rounded-xl hover:from-primary-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-xl transform hover:scale-105 font-medium">
-                                查看更多经历 <i class="fas fa-chevron-down ml-2"></i>
-                            </button>
-                        </div>
-                        
-                        <!-- 更多经历 (默认隐藏) -->
-                        <div id="more-experience" class="hidden">
-                            <!-- VIPKID -->
+                        <!-- 时间轴设计 -->
+                        <div class="relative border-l-2 border-primary-200 dark:border-primary-700 pl-6 ml-3 mt-8">
+                            <!-- Evercall -->
                             <div class="mb-10 experience-card">
                                 <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
                                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                     <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">VIPKID · 前端研发高级工程师</h3>
+                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">Evercall · 前端开发</h3>
                                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                            <i class="far fa-calendar-alt mr-1"></i>2017/09 - 2021/01
+                                            <i class="far fa-calendar-alt mr-1"></i>2025/03 - 至今
                                         </div>
                                     </div>
-                                    
+
                                     <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
                                         <li>
-                                            <span class="font-semibold">启蒙App内容生产平台开发：</span> 从0到1独立完成了启蒙app端课程的内容生产平台，包括
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">知识树管理</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">游戏资源</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">视频制作</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">素材库</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">资源管理</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">课程配置</span>
-                                            <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">儿歌管理</span>
-                                            等模块。
+                                            <span class="font-semibold">公司官网开发：</span>
+                                            独立完成公司官网的设计与开发，网址：
+                                            <a href="https://www.xinliuyuansu.com/" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">https://www.xinliuyuansu.com/</a>
                                         </li>
                                         <li>
-                                            <span class="font-semibold">在线教室中心 - 富媒体组：</span> 主要负责老师端业务，包括老师端组件化的工作，以及iPad页面上的组件开发。使用
-                                            <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">lerna</span>
-                                            管理模块间的版本，确保组件的稳定性和可维护性。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">基础服务前端组：</span> 负责供业务需要的各个管理端系统开发，独立完成了四个系统的开发，包括构建系统整个流程、权限管理、路由配置、控制层/数据层/视图层/组件化等。同时解决了不同权限的处理、不同环境下的构建和部署问题。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">SSO单点登录系统：</span> 将SSO接入LDAP，实现了业务系统的单点登录整合，提高了用户体验，降低了安全风险和管理消耗。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">富媒体权限管理：</span> 管理LDAP公司员工权限，赋加角色/权限，将应用按业务功能划分操作权限。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">组织架构管理系统：</span> 组织架构接入多个部门，开发了组件
-                                            <span class="inline-block px-2 py-0.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 rounded mr-1 text-xs">staff-manager</span>
-                                            ，提高了组织管理的效率和准确性。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">信窗内容管理系统：</span> 解决了产品上线通知、公司宣传等问题，提高了信息传递的效率和触达一线业务人员的效率。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">排班内容管理系统：</span> 满足不同业务线的排班需求，为考勤、绩效、leads分配等应用场景提供了数据支持，提高了运营管理支持力度。
-                                        </li>
-                                        <li>
-                                            <span class="font-semibold">定制表单：</span> 通过配置JSON产出页面。
+                                            <span class="font-semibold">AI情感陪伴数字人智能对话系统：</span>
+                                            基于 <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">React</span>
+                                            <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Vite</span>
+                                            <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">Tailwind CSS</span>
+                                            的现代化前端项目。实现了完整的智能对话流程：
+                                            <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                                                <li>用户可通过文字或语音（ASR识别转文字）输入</li>
+                                                <li>WebSocket实时通信，将消息发送到FastAPI后端</li>
+                                                <li>记忆引擎集成：从MongoDB获取用户档案、从Redis获取短期对话历史、通过Faiss向量检索相关长期记忆</li>
+                                                <li>Prompt组装：用户档案+对话上下文+相关记忆组装成完整Prompt</li>
+                                                <li>调用豆包大模型流式生成回复文本</li>
+                                                <li>同步调用TTS引擎将文本转换为情感化语音</li>
+                                                <li>WebSocket实时推送文本片段和音频片段到前端</li>
+                                                <li>前端实现逐字显示AI回复、播放语音、驱动Live2D数字人动画</li>
+                                                <li>对话结束后提取重要信息并保存到长期记忆（向量化后存入Faiss+MongoDB），更新短期记忆（Redis）和用户档案活跃时间，形成完整的对话-记忆-学习闭环</li>
+                                            </ul>
                                         </li>
                                     </ul>
 
-                                    <div class="flex flex-wrap gap-1 mb-2">
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">electron</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">canvas</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">konvaJS</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm模块</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">UI组件化</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">H5</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue.js</span>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">公司官网</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                独立完成官网设计与开发，展示公司品牌形象和产品服务
+                                            </p>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">AI情感陪伴数字人系统</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                智能对话、记忆引擎、Live2D数字人、语音交互等完整功能
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-wrap gap-1">
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">腾讯信令、流媒体</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Webpack</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">lerna</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vite</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Tailwind CSS</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Nextjs</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">FastAPI</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">MongoDB</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Redis</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Faiss</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">豆包大模型</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">TTS</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">ASR</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Live2D</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">流式生成</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 生煎包店铺 -->
+                            <div class="mb-10 experience-card">
+                                <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                    <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">生煎包店铺 · 生煎包</h3>
+                                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                            <i class="far fa-calendar-alt mr-1"></i>2024/05 - 2025/02
+                                        </div>
+                                    </div>
+                                    <p class="mb-3 text-sm text-gray-700 dark:text-gray-300">
+                                        在燕郊便民市场开了一个生煎包店铺，因经营不善关门了。  <span class="underline text-blue-500">#小程序://食尚朋友/1jYc1QuUEEzOWmr</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <!-- 自由职业 -->
+                            <div class="mb-10 experience-card">
+                                <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                    <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">自由职业者 · 前端开发</h3>
+                                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                            <i class="far fa-calendar-alt mr-1"></i>2022/08 - 2024/04
+                                        </div>
+                                    </div>
+
+                                    <p class="mb-3 text-sm text-gray-700 dark:text-gray-300">
+                                        在这一段自由职业期间，我积极参与了多个项目，积累了丰富的实践经验。独立完成了多个前端开发项目，包括但不限于超级语言AI、三元及递小程序、投递App等。
+                                    </p>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">AIGC超级语言</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                独立完成整个项目的前端工作，实现了文生图片、图片处理、图生成视频、生成配音等功能。
+                                            </p>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">光电圈公司的官网与后台管理系统开发</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                行业招聘、新闻资讯、行业活动、光电专家、光电期刊、光电企业、光电产品、光电方案、信息中心、权限管理等。
+                                            </p>
+                                        </div>
+
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">软益公司</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                动态分阶段分步骤创建项目，有列表、看板、甘特图、日历等。供应商对比/评审分类列表，知识文档等
+                                            </p>
+                                        </div>
+
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">妙喵相机小程序</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                变脸，美化帅点，从本地相册选择20张照片，然后进行合成，产出一张美化后的照片，可以选择模板，生成例如古风、现代等风格的照片，可分享到朋友圈等功能。
+                                            </p>
+                                        </div>
+
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">美众程序</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                利用小程序变发型、试戴记录/详情、门店预约、在线预约、腾讯地图、选择发型师、到店时间、填写预约人信息、发型师列表等功能。
+                                            </p>
+                                        </div>
+
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">三元及递小程序、投递App(投递员用的)、物流App(站长用的)、三元乳业后台管理系统</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                卖奶、投递员投递奶、站长管理奶等，有购物车，结算支付，保健抵扣、奶卡充值、订单管理、配送管理(天天送、工作送、隔日送、周末送、增加特定的排除日期等)、退奶流程、客户管理、购买流程、小区排序等功能。
+                                            </p>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue2/3</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vite</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">h5</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uview</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">element-plus</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">nuxtJs</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">AIGC</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">electron</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">konvaJS</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">threeJs</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">rouyi</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">java</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">mysql</span>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- 今目标 -->
+
+                            <!-- 北京有大科技 -->
                             <div class="mb-10 experience-card">
                                 <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
                                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
                                     <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">今目标 · 资深前端工程师</h3>
+                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">北京有大科技有限公司 · 前端开发</h3>
                                         <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                            <i class="far fa-calendar-alt mr-1"></i>2016/04 - 2017/09
+                                            <i class="far fa-calendar-alt mr-1"></i>2022/01 - 2022/07
                                         </div>
                                     </div>
-                                    
-                                    <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
-                                        主要负责工作台PC端、主线PC端、日志H5的开发及前端环境的集成实现方案。<br>
-                                        使用react全家桶技术栈，负责工作台PC端的开发，确保用户体验和功能的稳定性和高效性。<br>
-                                        负责主线PC端的开发，使用react + redux技术，实现复杂的前端交互逻辑和数据管理。<br>
-                                        使用react全家桶，负责日志H5的开发，实现了移动端日志的查看和编辑功能。<br>
-                                        负责前端环境的集成实现方案，包括mock数据、node + express + http-proxy的搭建、webpack + babel的打包编译等。
-                                    </p>
+
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
+                                        <li>主要负责线上云会议平台及参会主办方的活动后台管理系统的创建。此外，还包括埋点系统SDK类库开发、性能优化以及生成邮箱低代码邮件系统的开发。
+                                        </li>
+                                        <li><span class="font-semibold">线上云会议平台开发：</span> 会议预约和报名功能设计，直播及聊天室等功能实现，确保稳定和流畅，会议记录和回放功能开发。</li>
+                                        <li><span class="font-semibold">活动后台管理系统：</span> 活动信息管理模块开发，参会人员管理功能设计，活动数据分析与可视化。</li>
+                                        <li><span class="font-semibold">埋点系统：</span> 设计并实现了一套完整的用户行为追踪系统，收集并分析用户数据，为产品优化提供依据。</li>
+                                        <li><span class="font-semibold">性能优化：</span> 对前端页面进行性能优化，减少加载时间和资源消耗。对后端API进行调优，提高响应速度和并发处理能力。</li>
+                                        <li><span class="font-semibold">生成邮箱低代码邮件系统：</span> 参与低代码邮件系统的开发，提高了邮件生成效率和灵活性。</li>
+                                    </ul>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">线上云会议平台</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                开发会议预约、报名、直播及聊天室等功能
+                                            </p>
+                                        </div>
+                                        <div class="bg-gray-50 dark:bg-gray-700/50 p-2 rounded">
+                                            <h4 class="font-semibold text-primary-600 dark:text-primary-400 text-sm">埋点系统</h4>
+                                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                                设计并实现用户行为追踪系统，为产品优化提供依据
+                                            </p>
+                                        </div>
+                                    </div>
 
                                     <div class="flex flex-wrap gap-1">
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">element-plus</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Ant Design</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">echarts</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">threeJs</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue3</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">react</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">网易IM</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">信令、流媒体</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Pinia</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vite</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebRTC</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 58到家 快狗打车 -->
+                            <div class="mb-10 experience-card">
+                                <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                    <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">58到家 - 快狗打车 · 前端开发</h3>
+                                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                            <i class="far fa-calendar-alt mr-1"></i>2021/01 - 2022/01
+                                        </div>
+                                    </div>
+
+                                    <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
+                                        <li><span class="font-semibold">主要负责业务：</span><br>
+                                            <span class="block ml-4">合伙人业务：包括快狗通后台、合伙人小程序(微信)、支付宝游骑兵H5。</span>
+                                            <span class="block ml-4">搬家业务：用户端与司机端App H5、uniapp(微信与支付宝小程序)、快狗通后台(搬家相关业务)。</span>
+                                            <span class="block ml-4">车服业务：分润、车商城、咔咔找车(微信小程序)、快狗通后台(车服相关业务)。</span>
+                                        </li>
+                                        <li><span class="font-semibold">主要工作内容：</span></li>
+                                        <li class="ml-4">业务文件拆分与组件化：主导业务文件的拆分工作，使每个组件职责单一，只做一件事情，大大提高了代码的可读性和可维护性。</li>
+                                        <li class="ml-4">重构：针对app的H5搬家业务，重构了mock数据工作流。通过router增加children、vuex增加module/namespaced等方式，优化了数据传递和模拟数据流，使得开发过程中数据的处理更为高效和准确。</li>
+                                        <li class="ml-4">响应式布局优化：参与响应式布局的调整，确保页面在不同设备上都能良好地展示。</li>
+                                        <li class="ml-4">webpack部署与H5多页面数据传输：负责webpack的部署工作，确保项目能够顺利上线运行，并处理了app webview H5间的数据传输问题，提高了页面的交互效率。</li>
+                                    </ul>
+
+                                    <div class="flex flex-wrap gap-1">
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">App</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">H5</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm模块</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">微信小程序</span>
+                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue.js</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">nodejs</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">express</span>
                                         <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Webpack</span>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- 奇虎360 -->
-                            <div class="mb-10 experience-card">
-                                <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
-                                    <div class="flex flex-col sm:flex-row justify-between mb-2">
-                                        <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">奇虎360 · 前端开发工程师</h3>
-                                        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                            <i class="far fa-calendar-alt mr-1"></i>2013/09 - 2016/03
+
+                            <!-- 查看更多按钮 -->
+                            <div class="text-center mt-8">
+                                <button id="show-more"
+                                        class="px-6 py-3 bg-gradient-to-r from-primary-500 to-blue-600 text-white rounded-xl hover:from-primary-600 hover:to-blue-700 transition-all duration-300 shadow-md hover:shadow-xl transform hover:scale-105 font-medium">
+                                    查看更多经历 <i class="fas fa-chevron-down ml-2"></i>
+                                </button>
+                            </div>
+
+                            <!-- 更多经历 (默认隐藏) -->
+                            <div id="more-experience" class="hidden">
+                                <!-- VIPKID -->
+                                <div class="mb-10 experience-card">
+                                    <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                            <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">VIPKID · 前端研发高级工程师</h3>
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                <i class="far fa-calendar-alt mr-1"></i>2017/09 - 2021/01
+                                            </div>
+                                        </div>
+
+                                        <ul class="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mb-3">
+                                            <li>
+                                                <span class="font-semibold">启蒙App内容生产平台开发：</span> 从0到1独立完成了启蒙app端课程的内容生产平台，包括
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">知识树管理</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">游戏资源</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">视频制作</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">素材库</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">资源管理</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">课程配置</span>
+                                                <span class="inline-block px-2 py-0.5 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-200 rounded mr-1 text-xs">儿歌管理</span>
+                                                等模块。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">在线教室中心 - 富媒体组：</span> 主要负责老师端业务，包括老师端组件化的工作，以及iPad页面上的组件开发。使用
+                                                <span class="inline-block px-2 py-0.5 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded mr-1 text-xs">lerna</span>
+                                                管理模块间的版本，确保组件的稳定性和可维护性。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">基础服务前端组：</span> 负责供业务需要的各个管理端系统开发，独立完成了四个系统的开发，包括构建系统整个流程、权限管理、路由配置、控制层/数据层/视图层/组件化等。同时解决了不同权限的处理、不同环境下的构建和部署问题。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">SSO单点登录系统：</span> 将SSO接入LDAP，实现了业务系统的单点登录整合，提高了用户体验，降低了安全风险和管理消耗。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">富媒体权限管理：</span> 管理LDAP公司员工权限，赋加角色/权限，将应用按业务功能划分操作权限。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">组织架构管理系统：</span> 组织架构接入多个部门，开发了组件
+                                                <span class="inline-block px-2 py-0.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-200 rounded mr-1 text-xs">staff-manager</span>
+                                                ，提高了组织管理的效率和准确性。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">信窗内容管理系统：</span> 解决了产品上线通知、公司宣传等问题，提高了信息传递的效率和触达一线业务人员的效率。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">排班内容管理系统：</span> 满足不同业务线的排班需求，为考勤、绩效、leads分配等应用场景提供了数据支持，提高了运营管理支持力度。
+                                            </li>
+                                            <li>
+                                                <span class="font-semibold">定制表单：</span> 通过配置JSON产出页面。
+                                            </li>
+                                        </ul>
+
+                                        <div class="flex flex-wrap gap-1 mb-2">
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">electron</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">canvas</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">konvaJS</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">npm模块</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">UI组件化</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">H5</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">uni-app</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Vue.js</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">腾讯信令、流媒体</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Webpack</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">lerna</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">WebSocket</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">rouyi</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">java</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">mysql</span>
                                         </div>
                                     </div>
-                                    
-                                    <p class="text-sm text-gray-700 dark:text-gray-300">
-                                        主要负责身边生活app的开发和pc与移动业务的词条开发。<br>
-                                        负责身边生活app的前端开发，使用Backbone+seajs技术栈，实现app的交互逻辑和数据管理。<br>
-                                        负责pc与移动业务的词条开发，使用zeptojs和h5单页页面开发技术，实现词条的搜索、编辑和展示功能。通过优化词条质量和用户体验，提高用户的满意度和搜索效率。
-                                    </p>
+                                </div>
 
-                                    <div class="flex flex-wrap gap-1">
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Jquery</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">seajs</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">requirejs</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Backbone</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">zepto</span>
-                                        <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vue</span>
+                                <!-- 今目标 -->
+                                <div class="mb-10 experience-card">
+                                    <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                            <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">今目标 · 资深前端工程师</h3>
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                <i class="far fa-calendar-alt mr-1"></i>2016/04 - 2017/09
+                                            </div>
+                                        </div>
+
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                                            主要负责工作台PC端、主线PC端、日志H5的开发及前端环境的集成实现方案。<br>
+                                            使用react全家桶技术栈，负责工作台PC端的开发，确保用户体验和功能的稳定性和高效性。<br>
+                                            负责主线PC端的开发，使用react + redux技术，实现复杂的前端交互逻辑和数据管理。<br>
+                                            使用react全家桶，负责日志H5的开发，实现了移动端日志的查看和编辑功能。<br>
+                                            负责前端环境的集成实现方案，包括mock数据、node + express + http-proxy的搭建、webpack + babel的打包编译等。
+                                        </p>
+
+                                        <div class="flex flex-wrap gap-1">
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">React</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">nodejs</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">express</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Webpack</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 奇虎360 -->
+                                <div class="mb-10 experience-card">
+                                    <div class="absolute w-4 h-4 bg-primary-500 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-300">
+                                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                                            <h3 class="text-xl font-bold text-primary-700 dark:text-primary-400">奇虎360 · 前端开发工程师</h3>
+                                            <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                <i class="far fa-calendar-alt mr-1"></i>2013/09 - 2016/03
+                                            </div>
+                                        </div>
+
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                                            主要负责身边生活app的开发和pc与移动业务的词条开发。<br>
+                                            负责身边生活app的前端开发，使用Backbone+seajs技术栈，实现app的交互逻辑和数据管理。<br>
+                                            负责pc与移动业务的词条开发，使用zeptojs和h5单页页面开发技术，实现词条的搜索、编辑和展示功能。通过优化词条质量和用户体验，提高用户的满意度和搜索效率。
+                                        </p>
+
+                                        <div class="flex flex-wrap gap-1">
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Jquery</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">seajs</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">requirejs</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Backbone</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">zepto</span>
+                                            <span class="px-2 py-1 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">vue</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 早期经历 -->
+                                <div class="mb-10">
+                                    <div class="absolute w-4 h-4 bg-gray-400 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
+                                    <div class="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
+                                        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">早期职业经历</h3>
+                                        <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                                            <li>开心网 (2011/11 - 2013/09) - Web前端开发</li>
+                                            <li>贝塔斯曼 (2011/02 - 2011/11) - UI前端工程师</li>
+                                            <li>同方电子 (2007/08 - 2011/02) - 软件UI设计师/前端</li>
+                                            <li>北京中工纺广告有限公司 (2004/01 - 2007/08) - 平面设计</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- 早期经历 -->
-                            <div class="mb-10">
-                                <div class="absolute w-4 h-4 bg-gray-400 rounded-full -left-[9px] border-4 border-white dark:border-gray-800"></div>
-                                <div class="bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg">
-                                    <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">早期职业经历</h3>
-                                    <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                                        <li>开心网 (2011/11 - 2013/09) - Web前端开发</li>
-                                        <li>贝塔斯曼 (2011/02 - 2011/11) - UI前端工程师</li>
-                                        <li>同方电子 (2007/08 - 2011/02) - 软件UI设计师/前端</li>
-                                        <li>北京中工纺广告有限公司 (2004/01 - 2007/08) - 平面设计</li>
-                                    </ul>
+                        </div>
+                    </section>
+
+                    <!-- 教育经历 -->
+                    <section class="mb-10">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
+                            <i class="fas fa-graduation-cap text-primary-500 text-2xl"></i>
+                            <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">教育经历</h2>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+                            <div class="flex flex-col sm:flex-row justify-between items-start">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">河北临漳二中</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">高中学历</p>
+                                </div>
+                                <div class="inline-flex items-center px-4 py-2 mt-3 sm:mt-0 rounded-full text-sm font-medium bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300 shadow-sm">
+                                    <i class="far fa-calendar-alt mr-2"></i>1999/09 - 2002/07
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
 
-                <!-- 教育经历 -->
-                <section class="mb-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-1 h-8 bg-gradient-to-b from-primary-500 to-blue-600 rounded-full"></div>
-                        <i class="fas fa-graduation-cap text-primary-500 text-2xl"></i>
-                        <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100">教育经历</h2>
-                    </div>
-                    
-                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-800/50 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-                        <div class="flex flex-col sm:flex-row justify-between items-start">
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">河北临漳二中</h3>
-                                <p class="text-gray-600 dark:text-gray-400">高中学历</p>
-                            </div>
-                            <div class="inline-flex items-center px-4 py-2 mt-3 sm:mt-0 rounded-full text-sm font-medium bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300 shadow-sm">
-                                <i class="far fa-calendar-alt mr-2"></i>1999/09 - 2002/07
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </div>
-            
             <!-- 页脚 -->
             <div class="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-50 dark:from-gray-800 dark:via-gray-800/90 dark:to-gray-800 p-6 rounded-b-xl text-center border-t border-gray-200 dark:border-gray-700">
                 <p class="text-sm text-gray-600 dark:text-gray-400 font-medium">
@@ -966,49 +971,49 @@
                 </p>
             </div>
         </div>
-        
+
         <!-- 回到顶部按钮 -->
-        <div id="back-to-top" 
+        <div id="back-to-top"
              class="fixed bottom-6 right-6 bg-gradient-to-br from-primary-500 to-blue-600 text-white p-3 rounded-full shadow-xl hover:shadow-2xl cursor-pointer opacity-0 transition-all duration-300 hidden z-50 group hover:scale-110">
             <i class="fas fa-arrow-up text-lg"></i>
             <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">回到顶部</span>
         </div>
     </div>
-    
+
     <!-- JavaScript -->
     <script>
         // 主题切换
         const themeToggle = document.getElementById('theme-toggle');
         const html = document.documentElement;
-        
+
         // 检查本地存储的主题或系统偏好
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const savedTheme = localStorage.getItem('theme');
-        
+
         if (savedTheme === 'dark' || (!savedTheme && darkModeMediaQuery.matches)) {
             html.classList.add('dark');
         }
-        
+
         // 主题切换事件
         themeToggle.addEventListener('click', () => {
             html.classList.toggle('dark');
             localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
         });
-        
+
         // 显示更多经历
         const showMoreBtn = document.getElementById('show-more');
         const moreExperience = document.getElementById('more-experience');
-        
+
         showMoreBtn.addEventListener('click', () => {
             moreExperience.classList.toggle('hidden');
-            showMoreBtn.innerHTML = moreExperience.classList.contains('hidden') 
-                ? '查看更多经历 <i class="fas fa-chevron-down ml-1"></i>' 
+            showMoreBtn.innerHTML = moreExperience.classList.contains('hidden')
+                ? '查看更多经历 <i class="fas fa-chevron-down ml-1"></i>'
                 : '收起更多经历 <i class="fas fa-chevron-up ml-1"></i>';
         });
-        
+
         // 回到顶部按钮
         const backToTopBtn = document.getElementById('back-to-top');
-        
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 backToTopBtn.classList.remove('hidden', 'opacity-0');
@@ -1023,19 +1028,19 @@
                 }, 300);
             }
         });
-        
+
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
-        
+
         // PDF下载功能
         const pdfDownloadBtn = document.getElementById('pdf-download-btn');
-        
+
         pdfDownloadBtn.addEventListener('click', generatePDF);
-        
+
         function generatePDF() {
             // 检查html2pdf库是否加载
             if (typeof html2pdf === 'undefined') {
@@ -1065,7 +1070,7 @@
             if (wasMoreExperienceHidden) {
                 moreExperience.classList.remove('hidden');
             }
-            
+
             // 隐藏查看更多按钮
             showMoreBtn.dataset.originalDisplay = showMoreBtn.style.display;
             showMoreBtn.style.display = 'none';
@@ -1087,7 +1092,7 @@
             // 等待DOM更新
             setTimeout(() => {
                 // 获取主内容容器
-                const element = document.querySelector('.container-body');
+                const element = document.querySelector('.resume-container');
 
                 if (!element) {
                     console.error('找不到简历内容容器');
@@ -1097,18 +1102,18 @@
 
                 // html2pdf选项
                 const opt = {
-                    margin: [10, 10, 10, 10],
+                    margin: 5,
                     filename: '商文学_简历.pdf',
                     image: { type: 'jpeg', quality: 1 },
-                    html2canvas: { 
-                        scale: 2, 
-                        useCORS: true, 
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
                         logging: false,
                         backgroundColor: '#ffffff'
                     },
-                    jsPDF: { 
-                        unit: 'mm', 
-                        format: 'a4', 
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
                         orientation: 'portrait',
                         compress: true
                     }
@@ -1154,7 +1159,7 @@
                 }
             }, 300);
         }
-        
+
         // 页面加载完成后触发进度条动画
         window.addEventListener('load', () => {
             const progressBars = document.querySelectorAll('.progress-bar > div');
@@ -1169,4 +1174,3 @@
     </script>
 </body>
 </html>
-    
